@@ -60,10 +60,15 @@ html {
 	text-align: center;
 }
 
+.settings b {
+	font-size: 1.25rem;
+}
+
 .setting {
 	margin-top: 5px;
 	width: 30px;
 }
+
 
 .button__div {
 	display: flex;
@@ -175,13 +180,25 @@ html {
 }
 
 #feedback {
+	background-color: grey;
+	border: 5px outset darkgray;
 	margin-left: 10px;
 	margin-right: 10px;
+	font-size: 1.5rem;
+	color: white;
+}
+
+#feedback:active {
+	border-style: inset;
 }
 
 #timer {
 	float: right;
 	margin-right: 5px;
+}
+
+.start {
+	font-size: 1.25rem;
 }
 
 @media screen and (max-width: 640px) {
@@ -215,4 +232,16 @@ html {
 		width: 40px;
 		font-size: 1.65rem;
 	}
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

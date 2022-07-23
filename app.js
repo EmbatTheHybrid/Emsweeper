@@ -24,6 +24,11 @@ let currentFlags = 0
 let currentTime = 0
 let revealingBombs = false
 let bombsRevealed = false
+let firstMove = true
+
+let currentHeight = 9
+let currentWidth = 11
+let currentBombs = 20
 
 let intervalId
 
@@ -39,6 +44,10 @@ function recursiveTileCheck(row, column) {
 			revealCell(row + yOff, column + xOff)
 		}
 	}
+}
+
+function resetFeedback() {
+	
 }
 
 function hasWon() {
@@ -70,11 +79,16 @@ function revealCell(row, column, ignore) {
 
 	let selection = mainBoard[row][column]
 
+	if (firstMove && selection === -1) {
+		moveBomb(row, column)
+		selection = mainBoard[row][column]
+	}
+
 	button.onmousedown = function() {}
 	button.onmouseup = function() {}
 	button.id = (selection == -1 ? "mine" : "disabled")
 
-	button.innerHTML = (selection == -1 ? "*" : selection)
+	button.innerHTML = `<b>${(selection == -1 ? "*" : selection)}</b>`
 	button.style.color = (selection == -1 ? "black" : number_colors[selection]) 
 
 	if (selection === 0) {
@@ -83,15 +97,81 @@ function revealCell(row, column, ignore) {
 
 	if (hasWon()) {
 		// The player won by activating all cells that aren't bombs
+		flagAllBombs()
 		feedback.innerHTML = "✓"
 		feedback.style.color = "lightgreen"
 		window.clearInterval(intervalId)
 	} else if (selection == -1 && !revealingBombs) {
 		revealAllBombs()
+		feedback.innerHTML = "❌"
 		window.clearInterval(intervalId)
 	}
 
-	console.log(1)
+	firstMove = false
+}
+
+function flagAllBombs() {
+	for (let i = 0; i < mainBoard.length; i++) {
+		for (let j = 0; j < mainBoard[i].length; j++) {
+			let button = board[i][j]
+			if (!isBomb(i, j)) {
+				continue
+			}
+
+			button.id = "flagged"
+			button.innerHTML = "🚩"
+		}
+	}
+	currentFlags = 0
+	flags.innerHTML = `Flags: ${currentFlags}`
+	bombsRevealed = true
+}
+
+function moveBomb(row, column) {
+	// Get all positions
+	let possibleMovePositions = []
+
+	for (let i = 0; i < mainBoard.length; i++) {
+		for (let j = 0; j < mainBoard[i].length; j++) {
+			if (isBomb(i, j)) {
+				continue
+			}
+			possibleMovePositions.push([i, j])
+		}
+	}
+
+	// Get random position
+	let position = possibleMovePositions[Math.floor(Math.random() * possibleMovePositions.length)]
+
+	// Set new position
+	mainBoard[row][column] = 0
+	mainBoard[position[0]][position[1]] = -1
+
+	computeNearestNeighbours()
+}
+
+function computeNearestNeighbours() {
+	for (let i = 0; i < mainBoard.length; i++) {
+		for (let j = 0; j < mainBoard[i].length; j++) {
+			if (isBomb(i, j)) {
+				continue
+			}
+			for (let yOff = -1; yOff <= 1; yOff++) {
+				for (let xOff = -1; xOff <= 1; xOff++) {
+					if (xOff === 0 && yOff === 0) {
+						continue
+					}
+					let boardRow = mainBoard[i + yOff]
+
+					if (boardRow === undefined || boardRow[j + xOff] === undefined || !isBomb(i + yOff, j + xOff)) {
+						continue
+					}
+
+					mainBoard[i][j]++;
+				}
+			}
+		}
+	}
 }
 
 function revealAllBombs() {
@@ -114,7 +194,6 @@ function revealAllBombs() {
 		}
 	}
 	revealingBombs = false
-	feedback.innerHTML = "❌"
 	bombsRevealed = true
 }
 
@@ -129,9 +208,7 @@ function flagCell(row, column) {
 	button.innerHTML = (button.id === "flagged" ? "🚩" : "")
 	
 	currentFlags += (button.id === "flagged" ? -1 : 1)
-	flags.innerHTML = "Flags: " + currentFlags
-
-	revealAllBombs()
+	flags.innerHTML = `Flags: ${currentFlags}`
 }
 
 function createLevel(height, width, bombs) {
@@ -147,11 +224,17 @@ function createLevel(height, width, bombs) {
 		return
 	}
 
+	// Reset feed back
+	feedback.innerHTML = "---"
+	feedback.style.color = "white"
+
 	board = []
+	mainBoard = []
 	currentFlags = bombs
 	currentTime = 0
 	bombsRevealed = false
 	revealingBombs = false
+	firstMove = true
 
 	window.clearInterval(intervalId)
 
@@ -204,38 +287,18 @@ function createLevel(height, width, bombs) {
 	}
 
 	// Now set the numbers
-	for (let i = 0; i < mainBoard.length; i++) {
-		for (let j = 0; j < mainBoard[i].length; j++) {
-			if (isBomb(i, j)) {
-				continue
-			}
-			for (let yOff = -1; yOff <= 1; yOff++) {
-				for (let xOff = -1; xOff <= 1; xOff++) {
-					if (xOff === 0 && yOff === 0) {
-						continue
-					}
-					let boardRow = mainBoard[i + yOff]
+	computeNearestNeighbours()
 
-					if (boardRow === undefined || boardRow[j + xOff] === undefined || !isBomb(i + yOff, j + xOff)) {
-						continue
-					}
-
-					mainBoard[i][j]++;
-				}
-			}
-		}
-	}
-
-	flags.innerHTML = "Flags: " + currentFlags
-	timer.innerHTML = "Timer: " + currentTime
+	flags.innerHTML = `Flags: ${currentFlags}`
+	timer.innerHTML = `Timer: ${currentTime}`
 
 	intervalId = window.setInterval(function() {
 		currentTime++
-		timer.innerHTML = "Timer: " + currentTime
+		timer.innerHTML = `Timer: ${currentTime}`
 	}, 1000)
 }
 
-createLevel(9, 11, 20)
+createLevel(currentHeight, currentWidth, currentBombs)
 
 // Section for creating a level
 start.onmouseup = function(e) {
@@ -243,14 +306,22 @@ start.onmouseup = function(e) {
 		return
 	}
 
-	let gameHeight = height.value
-	let gameWidth = width.value
-	let gameBombs = bombs.value
+	currentHeight = parseInt(height.value)
+	currentWidth = parseInt(width.value)
+	currentBombs = parseInt(bombs.value)
 
-	if (!gameWidth || !gameBombs || !gameHeight) {
+	if (!currentHeight || !currentWidth || !currentBombs) {
 		alert("All values must be inputted")
 		return
 	}
 
-	createLevel(gameHeight, gameWidth, gameBombs)
+	createLevel(currentHeight, currentWidth, currentBombs)
+}
+
+feedback.onmouseup = function(e) {
+	if (e.button !== 0) {
+		return
+	}
+
+	createLevel(currentHeight, currentWidth, currentBombs)
 }

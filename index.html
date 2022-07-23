@@ -15,7 +15,7 @@
 				<div class="minesweeper">
 					<div class="information">
 						<b id="flags">Flags: 0</b>
-						<b id="feedback">---</b>
+						<button id="feedback">---</button>
 						<b id="timer">Time: 0</b>
 					</div>
 					<div class="mine__holder">
@@ -26,15 +26,15 @@
 					<h1>Settings</h1>
 					<div class="field">
 						<b>Height (9-25): </b>
-						<input id="height" type="number" class="setting">
+						<input id="height" type="number" class="setting" value="9" min="0" oninput="validity.valid||(value='');">
 					</div>
 					<div class="field">
 						<b>Width (9-30): </b>
-						<input id="width" type="number" class="setting">
+						<input id="width" type="number" class="setting" value="11" min="0" oninput="validity.valid||(value='');">
 					</div>
 					<div class="field">
 						<b>Bombs: </b>
-						<input id="bombs" type="number" class="setting">
+						<input id="bombs" type="number" class="setting" value="20" min="0" oninput="validity.valid||(value='');">
 					</div>
 					<div class="button__div">
 						<button class="start">Start game</button>
