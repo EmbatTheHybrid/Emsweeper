@@ -16,7 +16,7 @@
 }
 
 html {
-	background-color: var(--main-color);
+	background-image: linear-gradient(to bottom, var(--gradient-color), var(--main-color) 20%, var(--main-color) 100%);
 }
 
 /* Hero section */
