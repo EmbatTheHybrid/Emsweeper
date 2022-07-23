@@ -222,8 +222,8 @@ function createLevel(height, width, bombs) {
 		alert("Width must be between 9 and 30")
 		return
 	}
-	else if (bombs >= height * width) {
-		alert("Bombs at max can be 1 less than (height x width)")
+	else if (bombs < 1 || bombs >= height * width) {
+		alert(`Bombs must be greater than 0 and less than ${height * width}`)
 		return
 	}
 
