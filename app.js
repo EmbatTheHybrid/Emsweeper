@@ -156,6 +156,8 @@ function computeNearestNeighbours() {
 			if (isBomb(i, j)) {
 				continue
 			}
+
+			let numBombs = 0
 			for (let yOff = -1; yOff <= 1; yOff++) {
 				for (let xOff = -1; xOff <= 1; xOff++) {
 					if (xOff === 0 && yOff === 0) {
@@ -167,9 +169,10 @@ function computeNearestNeighbours() {
 						continue
 					}
 
-					mainBoard[i][j]++;
+					numBombs++;
 				}
 			}
+			mainBoard[i][j] = numBombs;
 		}
 	}
 }
