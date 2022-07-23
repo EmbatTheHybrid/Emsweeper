@@ -243,6 +243,8 @@ start.onmouseup = function(e) {
 		return
 	}
 
+	console.log("b")
+
 	let gameHeight = height.value
 	let gameWidth = width.value
 	let gameBombs = bombs.value
