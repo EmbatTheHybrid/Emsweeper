@@ -277,7 +277,7 @@ function createLevel(height, width, bombs) {
 				press = window.setTimeout(function() {
 					navigator.vibrate(200)
 					flagCell(i, j)
-				}, 1500)
+				}, 1000)
 			}
 
 			button.onmouseup = function(e) {
