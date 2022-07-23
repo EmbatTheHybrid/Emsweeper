@@ -255,13 +255,31 @@ function createLevel(height, width, bombs) {
 
 			button.oncontextmenu = function() {
 				// Flagging
-				flagCell(i, j)
 				return false
 			}
 
+			let press;
+
+			button.onmousedown = function(e) {
+				if (e.button === 2) {
+					flagCell(i, j)
+				}
+
+				if (window.innerWidth < 640) {
+					press = window.setTimeout(function() {
+						navigator.vibrate(200)
+						flagCell(i, j)
+					}, 1500)
+				}
+			}
+
 			button.onmouseup = function(e) {
-				if (e.button == 0) {
+				if (e.button === 0) {
 					revealCell(i, j)
+				}
+
+				if (window.innerWidth < 640) {
+					clearTimeout(press)
 				}
 			}
 
