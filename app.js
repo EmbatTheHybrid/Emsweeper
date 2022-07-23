@@ -255,14 +255,8 @@ function createLevel(height, width, bombs) {
 
 			button.oncontextmenu = function() {
 				// Flagging
-				return false
-			}
-
-			button.onmousedown = function(e) {
-				if (e.button != 2) {
-					return
-				}
 				flagCell(i, j)
+				return false
 			}
 
 			button.onmouseup = function(e) {
