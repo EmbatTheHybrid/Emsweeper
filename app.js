@@ -8,6 +8,8 @@ const height = document.getElementById("height")
 const width = document.getElementById("width")
 const bombs = document.getElementById("bombs")
 
+const max_width = 640;
+
 const levels = {
 	"Easy": [
 		9, 9, 20
@@ -264,8 +266,17 @@ function createLevel(height, width, bombs) {
 				if (e.button === 2) {
 					flagCell(i, j)
 				}
+			}
 
-				if (window.innerWidth < 640) {
+
+			button.ontouchend = function() {
+				if (window.innerWidth < max_width) {
+					clearTimeout(press)
+				}
+			}
+
+			button.ontouchstart = function() {
+				if (window.innerWidth < max_width) {
 					press = window.setTimeout(function() {
 						navigator.vibrate(200)
 						flagCell(i, j)
@@ -278,9 +289,7 @@ function createLevel(height, width, bombs) {
 					revealCell(i, j)
 				}
 
-				if (window.innerWidth < 640) {
-					clearTimeout(press)
-				}
+				
 			}
 
 			board[i][j] = button
