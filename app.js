@@ -270,18 +270,14 @@ function createLevel(height, width, bombs) {
 
 
 			button.ontouchend = function() {
-				if (window.innerWidth < max_width) {
-					clearTimeout(press)
-				}
+				clearTimeout(press)
 			}
 
 			button.ontouchstart = function() {
-				if (window.innerWidth < max_width) {
-					press = window.setTimeout(function() {
-						navigator.vibrate(200)
-						flagCell(i, j)
-					}, 1500)
-				}
+				press = window.setTimeout(function() {
+					navigator.vibrate(200)
+					flagCell(i, j)
+				}, 1500)
 			}
 
 			button.onmouseup = function(e) {
