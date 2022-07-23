@@ -1,0 +1,218 @@
+:root {
+	--navbar-color: #38013d;
+	--main-color: #3c253e;
+	--dropdown-color: #300833;
+	--gradient-color: #3A023F;
+	--gradient-black: rgba(17,17,17,0.3);
+	--border-color: #180e1b;
+	--main-text: rgb(247, 204, 242);
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+	background-color: var(--main-color);
+}
+
+/* Hero section */
+.main {
+	background-image: linear-gradient(to bottom, var(--gradient-color), var(--main-color) 20%, var(--main-color) 100%);
+}
+
+.main__container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	justify-self: center;
+	margin: 0 auto 0 auto;
+	width: max-content;
+	z-index: 1;
+	padding-top: 135px;
+}
+
+.minesweeper {
+	padding-left: 25px;
+	/* padding-left: 200px; */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	justify-self: center;
+	margin: 0 auto 0 auto;
+	width: max-content;
+	z-index: 1;
+}
+
+.settings {
+	margin-left: 100px;
+	background-color: grey;
+	border: 5px outset darkgray;
+	color: white;
+}
+
+.settings h1 {
+	text-align: center;
+}
+
+.setting {
+	margin-top: 5px;
+	width: 30px;
+}
+
+.button__div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#more-information {
+	font-size: 2.5rem;
+	background-color: var(--main-text);
+	background-image: none;
+}
+
+.main__img-container {
+	max-width: 100%;
+	height: auto;
+	margin-bottom: 2rem;
+}
+
+#main__img {
+	display: block;
+	border: 10px solid;
+	border-color: var(--border-color);
+	margin-left: auto;
+	margin-right: auto;
+	height: auto;
+	width: 600px;
+	max-height: auto;
+	max-width: 100%;
+}
+
+.information {
+	text-align: center;
+	background-color: grey;
+	border: 5px outset darkgray;
+	width: 100%;
+	z-index: 1;
+	font-size: 1.85rem;
+}
+
+.information b {
+	color: white;
+}
+
+.mine__holder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	justify-self: center;
+	background-color: grey;
+	border: 5px outset darkgray;
+	height: max-content;
+	width: max-content;
+	z-index: 1;
+	font-size: 2rem;
+}
+
+.mine__row {
+	display: flex;
+	flex-direction: row;
+	align-items: left;
+	justify-content: left;
+	justify-self: left;
+	background-color: grey;
+	
+	width: max-content;
+	z-index: 1;
+	font-size: 2rem;
+}
+
+#disabled {
+	border: 2px solid grey;
+	background-color: darkgray;
+}
+
+#mine {
+	font-size: 2rem;
+	border: 2px solid grey;
+	background-color: darkgray;
+}
+
+.cell {
+	background-color: grey;
+	border: 5px outset darkgray;
+	width: 27px;
+	height: 27px;
+	font-size: 1.25rem;
+	color: blue;
+}
+
+.cell:active {
+	border-style: inset;
+}
+
+#flagged {
+	font-size: 0.75rem;
+}
+
+#flagged:active {
+	border-style: outset;
+}
+
+#flags {
+	float: left;
+	margin-left: 5px;
+}
+
+#feedback {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+#timer {
+	float: right;
+	margin-right: 5px;
+}
+
+@media screen and (max-width: 640px) {
+	.cell {
+		height: 35px;
+		width: 35px;
+		font-size: 1.50rem;
+	}
+
+	.field {
+		font-size: 1.5rem;
+	}
+
+	.setting {
+		font-size: 1.5rem;
+	}
+	
+	.start {
+		width: 100px;
+		height: 35px;
+	}
+
+	.button__div {
+		margin-top: 10px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.cell {
+		height: 40px;
+		width: 40px;
+		font-size: 1.65rem;
+	}
+}

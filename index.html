@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="./styles.css" />
+		<title>Emsweeper</title>
+	</head>
+	<body>
+		
+		<!-- Hero section -->
+		<div class="main">
+			<div class="main__container" id="index_container">
+				<div class="minesweeper">
+					<div class="information">
+						<b id="flags">Flags: 0</b>
+						<b id="feedback">---</b>
+						<b id="timer">Time: 0</b>
+					</div>
+					<div class="mine__holder">
+						
+					</div>
+				</div>
+				<div class="settings">
+					<h1>Settings</h1>
+					<div class="field">
+						<b>Height (9-25): </b>
+						<input id="height" type="number" class="setting">
+					</div>
+					<div class="field">
+						<b>Width (9-30): </b>
+						<input id="width" type="number" class="setting">
+					</div>
+					<div class="field">
+						<b>Bombs: </b>
+						<input id="bombs" type="number" class="setting">
+					</div>
+					<div class="button__div">
+						<button class="start">Start game</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="./app.js"></script> 
+	</body>
+</html>
